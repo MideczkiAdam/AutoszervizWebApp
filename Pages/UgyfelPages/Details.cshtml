@@ -1,0 +1,66 @@
+@page
+@model AutoszervizWebApp.Pages.UgyfelPages.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Ugyfel adatai</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Ugyfel.Nev)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Ugyfel.Nev)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Ugyfel.Telefon)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Ugyfel.Telefon)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Ugyfel.Email)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Ugyfel.Email)
+        </dd>
+    </dl>
+    <h4>Javítások</h4>
+    <hr />
+    @if (Model.Ugyfel.Javitasok.Any())
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Leírás</th>
+                    <th>Felvétel ideje</th>
+                    <th>Költség</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var javitas in Model.Ugyfel.Javitasok)
+                {
+                    <tr>
+                        <td>@javitas.Leiras</td>
+                        <td>@javitas.FelvetelDatuma.ToString("yyyy.MM.dd HH:mm")</td>
+                        <td>@javitas.Koltseg.ToString("N2") Ft</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <h4>
+            Összköltség:
+            @Model.Ugyfel.Javitasok.Sum(j => j.Koltseg).ToString("N2") Ft
+        </h4>
+    }
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Ugyfel.Id">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>
